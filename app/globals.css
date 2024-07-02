@@ -1,7 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-    color: red;
+    font-family: "Poppins", sans-serif;
+    background-color: rgb(28, 28, 28);
+    min-height: 100vh;
+}
+
+.bg-color-1 {
+    background-color: #03045E;
+}
+
+.bg-color-2 {
+    background-color: #023E8A;
+}
+
+.bg-color-3 {
+    background-color: #0077B6;
+}
+
+.bg-color-4 {
+    background-color: #0096C7;
+}
+
+.bg-color-5 {
+    background-color: #00B4D8;
+}
+
+.bg-color-6 {
+    background-color: #48CAE4;
+}
+
+.bg-color-7 {
+    background-color: #90E0EF;
+}
+
+.bg-color-8 {
+    background-color: #ADE8F4;
+}
+
+.bg-color-9 {
+    background-color: #CAF0F8;
+}
+
+.bg-color-10 {
+    background-color: #48cae4ad;
+}
+
+/* text-colors */
+.text-color-1 {
+    color: #03045E;
+}
+
+.text-color-2 {
+    color: #023E8A;
+}
+
+.text-color-3 {
+    color: #0077B6;
+}
+
+.text-color-4 {
+    color: #0096C7;
+}
+
+.text-color-5 {
+    color: #00B4D8;
+}
+
+.text-color-6 {
+    color: #48CAE4;
+}
+
+.text-color-7 {
+    color: #90E0EF;
+}
+
+.text-color-8 {
+    color: #ADE8F4;
+}
+
+.text-color-9 {
+    color: #CAF0F8;
+}
+
+.onHover-bg-color-5 {
+    @apply hover:bg-[#00B4D8]
+}
+
+.onHover-bg-color-7 {
+    @apply hover:bg-[#90E0EF]
+}
+
+/* active link */
+.menu-list-item:has(.active-link) {
+    @apply text-black font-bold block bg-color-10 rounded
+}
+
+body:has(#menu-toggler:checked) #side-menu {
+    @apply scale-x-100
 }

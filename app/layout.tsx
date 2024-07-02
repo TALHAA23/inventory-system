@@ -1,3 +1,5 @@
+import NavBar from "./_components/NavBar";
+import SideMenu from "./_components/SideMenu";
 import "./globals.css";
 export const metadata = {
   title: "Inventory Mangment System",
@@ -11,10 +13,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="grid grid-rows-[60px_minmax(calc(100vh-60px),auto)] grid-cols-[200px_auto]">
-        <nav className="bg-red-700 col-span-full"></nav>
-        <aside className=" bg-blue-600">menu</aside>
-        {children}
+      <body className="lg:grid grid-cols-[300px_auto]">
+        <SideMenu />
+        <section>
+          <NavBar />
+          {children}
+        </section>
       </body>
     </html>
   );

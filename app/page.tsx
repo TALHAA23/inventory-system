@@ -1,8 +1,7 @@
-import connectToDB from "./_lib/utils/database";
+import Dashboard from "./_components/Dashboard";
 
-const page = async () => {
-  await connectToDB();
-  return <div>Home</div>;
+const page = () => {
+  return <Dashboard />;
 };
 
 export default page;
