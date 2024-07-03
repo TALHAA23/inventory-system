@@ -1,0 +1,41 @@
+import { Metadata } from "next";
+import ProductCard from "../_components/ProductCard";
+import getShopItems from "../_lib/database/getShopItems";
+import Pagination from "../_components/Pagination";
+
+const DOCUMENTS_PER_PAGE = 6;
+
+export const metadata: Metadata = {
+  title: "Shop",
+  description: "shop to buy product",
+};
+const page = async ({
+  searchParams,
+}: {
+  searchParams?: { query?: string; page?: string };
+}) => {
+  const pageNumber = searchParams?.page;
+  const data = await getShopItems(pageNumber);
+  return (
+    <section className=" m-2">
+      <h1 className=" font-bold text-4xl">
+        Shop - Buy Products and see changes
+      </h1>
+      <p className="bg-green-400/15 rounded p-2 text-xs my-2">
+        Buy dummey product to reflect on your dashboard. each purchase will be
+        recored and the change information will be reflected on dashboard and
+        each product invertory page. The quantily will be updated if reach 0
+        will require to re-stock the product. with the help of this test shop
+        stock alerts, charts, movements can be recorded to make it dynamic
+      </p>
+      <div className="bg-color-10 rounded p-3">
+        <Pagination disabled={data.length < DOCUMENTS_PER_PAGE} />
+        {data.map((product) => (
+          <ProductCard props={product} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default page;
