@@ -1,7 +1,29 @@
+"use client";
+import { useState } from "react";
 import { TypeProduct } from "../_types/TypeProduct";
 import Counter from "./Counter";
+import placeOrder from "../shop/server-actions/placeorder.server";
 
 const ProductCard = ({ props }: { props: TypeProduct }) => {
+  const [counter, setCounter] = useState(0);
+
+  const updateCounter = (dir: "inc" | "dec") => {
+    setCounter((prev) =>
+      dir == "inc"
+        ? prev == props.qty
+          ? prev
+          : prev + 1
+        : prev == 0
+        ? 0
+        : prev - 1
+    );
+  };
+
+  const placeOrderWithCounter = placeOrder.bind(null, {
+    ...props,
+    orderQty: counter,
+  });
+
   return (
     <div className="flex flex-col sm:flex-row border-b-2 py-3 justify-between sm:items-center">
       <div className="grow flex gap-5 items-center">
@@ -11,7 +33,15 @@ const ProductCard = ({ props }: { props: TypeProduct }) => {
           {props.qty} <span className=" text-xs font-light">stock</span>
         </p>
       </div>
-      <Counter />
+      <Counter counter={counter} updateCounter={updateCounter} />
+      <form action={placeOrderWithCounter}>
+        <button
+          disabled={counter === 0}
+          className="rounded-full mx-2 py-2 px-4 bg-green-950 text-white text-xs disabled:opacity-60"
+        >
+          Buy
+        </button>
+      </form>
     </div>
   );
 };

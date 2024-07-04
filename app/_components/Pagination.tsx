@@ -19,7 +19,7 @@ const Pagination = ({ disabled }: { disabled?: boolean }) => {
             <button
               onClick={() => handleClick(pageNumber)}
               disabled={pageNumber > page && disabled}
-              className={`rounded bg-white text-black aspect-square p-2 w-9 text-center disabled:opacity-60 ${
+              className={`rounded bg-white text-black aspect-square p-2 w-9 text-center disabled:opacity-60 disabled:cursor-not-allowed ${
                 page == pageNumber && "bg-cyan-900 text-white font-bold"
               } `}
             >
