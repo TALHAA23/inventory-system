@@ -20,6 +20,11 @@ export default async function placeOrder(payload: Payload) {
     payload.salesPrice
   );
   const revenue = discountCost || totalCost;
-  const response = await recordSale(payload.orderQty, income, revenue);
+  const response = await recordSale(
+    payload._id,
+    payload.orderQty,
+    income,
+    revenue
+  );
   console.log(response);
 }
