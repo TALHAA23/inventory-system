@@ -12,14 +12,14 @@ interface Payload extends TypeProduct {
 export default async function placeOrder(payload: Payload) {
   if (payload.orderQty > payload.qty) throw new Error("Order quantity exceed!");
   const totalCost = payload.salesPrice * payload.orderQty;
-  const discountCost = payload.discount
+  const discountPrice = payload.discount
     ? takeDiscount(totalCost, payload.discount)
     : 0;
   const income = calculateIncomePerItem(
     payload.originalPrice,
-    payload.salesPrice
+    discountPrice || payload.salesPrice
   );
-  const revenue = discountCost || totalCost;
+  const revenue = discountPrice || totalCost;
   const response = await recordSale(
     payload._id,
     payload.orderQty,

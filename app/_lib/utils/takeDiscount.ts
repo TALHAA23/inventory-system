@@ -17,6 +17,7 @@ export default function takeDiscount(
 
   // Calculate discount value (avoid unnecessary type conversion)
   const discountValue = totalValue * (discountPercentage / 100);
+  const discountedPrice = totalValue - discountValue;
 
-  return discountValue;
+  return discountedPrice;
 }

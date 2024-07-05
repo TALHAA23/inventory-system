@@ -1,4 +1,5 @@
 import OverallStats from "@/app/_models/overallStats";
+import { revalidateTag } from "next/cache";
 
 const updateOverStats = async (
   numberOfOrders: number,
@@ -14,6 +15,7 @@ const updateOverStats = async (
   };
   const options = { upsert: true };
   const doc = await OverallStats.findOneAndUpdate({}, update, options);
+  revalidateTag("overall-stats");
   return doc;
 };
 

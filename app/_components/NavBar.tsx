@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const NavBar = () => {
   return (
     <nav className=" bg-color-3 h-[60px] px-2 sticky top-0 font-bold text-2xl text-white flex items-center justify-between">
@@ -9,7 +11,7 @@ const NavBar = () => {
         />
       </label>
       <input id="menu-toggler" type="checkbox" hidden />
-      <h1>E-commerce Inventory</h1>
+      <Link href=".">E-commerce Inventory</Link>
     </nav>
   );
 };

@@ -3,10 +3,10 @@ import { useState } from "react";
 import { TypeProduct } from "../_types/TypeProduct";
 import Counter from "./Counter";
 import placeOrder from "../shop/server-actions/placeorder.server";
+import BuyButton from "./BuyButton";
 
 const ProductCard = ({ props }: { props: TypeProduct }) => {
   const [counter, setCounter] = useState(0);
-
   const updateCounter = (dir: "inc" | "dec") => {
     setCounter((prev) =>
       dir == "inc"
@@ -35,12 +35,7 @@ const ProductCard = ({ props }: { props: TypeProduct }) => {
       </div>
       <Counter counter={counter} updateCounter={updateCounter} />
       <form action={placeOrderWithCounter}>
-        <button
-          disabled={counter === 0}
-          className="rounded-full mx-2 py-2 px-4 bg-green-950 text-white text-xs disabled:opacity-60"
-        >
-          Buy
-        </button>
+        <BuyButton counter={counter} />
       </form>
     </div>
   );

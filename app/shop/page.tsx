@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductCard from "../_components/ProductCard";
 import getShopItems from "../_lib/database/getShopItems";
 import Pagination from "../_components/Pagination";
+import { revalidatePath } from "next/cache";
 
 const DOCUMENTS_PER_PAGE = 6;
 
@@ -17,7 +18,7 @@ const page = async ({
   const pageNumber = searchParams?.page;
   const data = await getShopItems(pageNumber);
   return (
-    <section className=" m-2">
+    <section className=" m-2 text-white">
       <h1 className=" font-bold text-4xl">
         Shop - Buy Products and see changes
       </h1>

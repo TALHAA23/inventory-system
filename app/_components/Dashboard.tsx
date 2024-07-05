@@ -1,22 +1,23 @@
+import { Suspense } from "react";
 import AmountSummaryCard from "./AmountSummaryCard";
 import PopularListings from "./PopularListings";
 import RecentOrders from "./RecentOrders";
 import LineChart from "./_charts/LineChart";
+import getPrevious12MonthsStats from "../_lib/database/getPrev12MonthsStats";
 
-const cards = Array(3).fill(
-  <AmountSummaryCard
-    title="Income"
-    value={12000}
-    todayInfo={3}
-    percentage={26}
-  />
-);
+const cards = ["Income", "Revenue", "Sales"].map((card) => (
+  <Suspense fallback="loading...">
+    <AmountSummaryCard title={card} />{" "}
+  </Suspense>
+));
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const data = await getPrevious12MonthsStats();
+  console.log(data);
   return (
     <div className="p-3">
       <div className="flex flex-wrap gap-2">{cards}</div>
-      {/* <LineChart /> */}
+      <LineChart />
       <div className="flex flex-wrap gap-0">
         <PopularListings />
         <PopularListings />

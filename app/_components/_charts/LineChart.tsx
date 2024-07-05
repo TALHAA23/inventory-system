@@ -1,11 +1,10 @@
 "use client";
-import months from "@/app/_lib/utils/months";
+import getPrev12MonthNames from "@/app/_lib/utils/getPrev12MonthNames";
 import { Chart, registerables } from "chart.js";
 import { useEffect, useRef } from "react";
 Chart.register(...registerables);
 const LineChart = () => {
   const chartRef = useRef<null | HTMLCanvasElement>(null);
-
   useEffect(() => {
     if (!chartRef.current) return;
     const ctx = chartRef.current.getContext("2d");
@@ -13,7 +12,7 @@ const LineChart = () => {
     const chart = new Chart(ctx, {
       type: "line",
       data: {
-        labels: months,
+        labels: getPrev12MonthNames(),
         datasets: [
           {
             label: "income",
@@ -22,6 +21,10 @@ const LineChart = () => {
           {
             label: "revenue",
             data: [10, 20, -50, 4, 30, 150],
+          },
+          {
+            label: "sales",
+            data: [2, 6, 10, 25, 23, 14, 9, 0, 10, 20, 20, 4],
           },
         ],
       },
