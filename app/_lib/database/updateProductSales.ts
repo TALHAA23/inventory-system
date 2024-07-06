@@ -1,6 +1,7 @@
 import ProductSales from "@/app/_models/productSales";
 import { Types } from "mongoose";
 import currentMMYY from "../utils/getCurrentMMYY";
+import { revalidatePath } from "next/cache";
 
 const updateProductSales = async (
   productId: Types.ObjectId,
@@ -21,6 +22,7 @@ const updateProductSales = async (
     update,
     options
   );
+  revalidatePath("top-sales-of-month");
   return doc;
 };
 export default updateProductSales;

@@ -1,11 +1,12 @@
 import TodaySales from "@/app/_models/todaySales";
+import { revalidateTag } from "next/cache";
 
 const updateTodaySales = async (
   numberOfOrders: number,
   income: number,
   revenue: number
 ) => {
-  const filter = { date: new Date("7/8/2024").toLocaleDateString() };
+  const filter = { date: new Date().toLocaleDateString() };
   const update = {
     $inc: {
       sales: numberOfOrders,
@@ -15,6 +16,9 @@ const updateTodaySales = async (
   };
   const options = { upsert: true };
   const doc = TodaySales.findOneAndUpdate(filter, update, options);
+  ["top-sales-of-month", "todays-inventory-info"].map((tag) =>
+    revalidateTag(tag)
+  );
   return doc;
 };
 

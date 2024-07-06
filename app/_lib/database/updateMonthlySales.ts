@@ -1,5 +1,6 @@
 import Sales from "@/app/_models/sales";
 import currentMMYY from "../utils/getCurrentMMYY";
+import { revalidateTag } from "next/cache";
 
 const updateMonthySales = async (
   numberOfOrders: number,
@@ -16,6 +17,7 @@ const updateMonthySales = async (
   };
   const options = { upsert: true };
   const doc = Sales.findOneAndUpdate(filter, update, options);
+  revalidateTag("12-month-stats");
   return doc;
 };
 

@@ -1,10 +1,13 @@
 import Sales from "@/app/_models/sales";
-import Month from "@/app/_types/MonthToNum";
 import extractSalesIncomeRevenueForLineChart from "../utils/extractSalesIncomeRevenueForLineChart";
 import { unstable_cache as cache } from "next/cache";
-
+import currentMMYY from "../utils/getCurrentMMYY";
+import connectToDB from "../utils/database";
+import getPrev12MonthNames from "../utils/getPrev12MonthNames";
+import Month from "@/app/_types/MonthToNum";
 const getPrevious12MonthsStats = cache(
   async () => {
+    await connectToDB();
     const currentYear = new Date().getFullYear();
     const prevYear = currentYear - 1;
 
@@ -19,14 +22,18 @@ const getPrevious12MonthsStats = cache(
     }
     const mergedData: { [key: string]: any } = {};
     if (prevYearDoc) {
-      for (const month in prevYearDoc.toJSON()) {
-        if (Month[month] >= Month.jul && Month[month] <= Month.dec) {
+      for (const month of getPrev12MonthNames()) {
+        if (
+          Month[month] > Month[currentMMYY.month] &&
+          Month[month] <= Month.dec
+        )
           mergedData[month] = prevYearDoc[month];
-        }
       }
     }
-    for (const month in currentYearDoc.toJSON()) {
-      mergedData[month] = currentYearDoc[month];
+
+    for (const month of getPrev12MonthNames()) {
+      if (Month[month] <= Month[currentMMYY.month])
+        mergedData[month] = currentYearDoc[month];
     }
     return extractSalesIncomeRevenueForLineChart(mergedData);
   },

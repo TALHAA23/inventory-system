@@ -13,7 +13,7 @@ const SalesSchema = new Schema({
   jan: monthFieldSchema,
   feb: monthFieldSchema,
   mar: monthFieldSchema,
-  api: monthFieldSchema,
+  apr: monthFieldSchema,
   may: monthFieldSchema,
   jun: monthFieldSchema,
   jul: monthFieldSchema,

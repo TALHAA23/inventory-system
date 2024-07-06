@@ -7,12 +7,12 @@ export default function getPrev12MonthNames(): string[] {
 
   // Add months from next month of previous year until December
   for (let i = startIndex; i <= 11; i++) {
-    monthArray.push(months[i]);
+    monthArray.push(months[i].toLowerCase());
   }
 
   // Add months from January of current year until current month
   for (let i = 0; i <= currentMonth; i++) {
-    monthArray.push(months[i]);
+    monthArray.push(months[i].toLowerCase());
   }
 
   return monthArray.slice(0, 12); // Ensure only 12 unique months are returned

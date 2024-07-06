@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import updateMonthySales from "./updateMonthlySales";
 import updateOverStats from "./updateOverallStats";
 import updateProductSales from "./updateProductSales";
+import updateTodaySales from "./updateTodaySales";
 
 const recordSale = async (
   productId: Types.ObjectId,
@@ -17,6 +18,7 @@ const recordSale = async (
       updateMonthySales(numberOfOrders, income, revenue),
       updateOverStats(numberOfOrders, income, revenue),
       updateProductSales(productId, numberOfOrders, income, revenue),
+      updateTodaySales(numberOfOrders, income, revenue),
     ];
 
     const result = await Promise.all(promises);

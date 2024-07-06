@@ -11,13 +11,11 @@ const TodaySalesSchema = new Schema({
   sales: { type: Number, require: true, default: 0 },
 });
 TodaySalesSchema.pre("findOneAndUpdate", async (next) => {
-  console.log("deleting old ones");
-  const doc = await TodaySales.deleteMany({
+  await TodaySales.deleteMany({
     date: {
       $ne: new Date().toLocaleDateString(),
     },
   }).exec();
-  console.log(">>>", doc);
   next();
 });
 

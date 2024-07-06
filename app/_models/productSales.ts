@@ -1,7 +1,7 @@
 import { model, models, Schema } from "mongoose";
 
 const ProductSalesSchema = new Schema({
-  productId: { type: Schema.Types.ObjectId, ref: "Products" },
+  productId: { type: Schema.Types.ObjectId, ref: "Product" },
   sales: { type: Schema.Types.Mixed },
 });
 
