@@ -2,7 +2,9 @@ import Dashboard from "./_components/Dashboard";
 import { faker } from "@faker-js/faker";
 import Product from "./_models/product";
 import connectToDB from "./_lib/utils/database";
-const page = () => {
+import getProductOverallStats from "./_lib/database/getProductOverallStats";
+const page = async () => {
+  console.log(await getProductOverallStats("668522ec94f27019d200ce57"));
   return <Dashboard />;
 };
 

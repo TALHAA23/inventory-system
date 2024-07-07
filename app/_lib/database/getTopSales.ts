@@ -24,14 +24,6 @@ const getTopSellingProducts = cache(
 
     const pipeLine: PipelineStage[] = [
       {
-        $lookup: {
-          from: "products",
-          localField: "productId",
-          foreignField: "_id",
-          as: "docs",
-        },
-      },
-      {
         $project: {
           _id: 0, // Exclude _id from the result
           productId: "$productId",

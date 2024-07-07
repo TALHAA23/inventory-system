@@ -35,7 +35,7 @@ const LineChart = ({ sales, revenue, income }: LineChartData) => {
   });
 
   return (
-    <div className="w-[98%] mx-auto my-5 h-fit   border-2 rounded border-gray-500">
+    <div className="w-[98%] mx-auto my-5 h-fit border-2 rounded border-gray-500">
       <canvas ref={chartRef}></canvas>
     </div>
   );

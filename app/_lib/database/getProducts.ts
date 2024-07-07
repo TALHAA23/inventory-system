@@ -3,7 +3,7 @@ import connectToDB from "../utils/database";
 import { unstable_cache as cache } from "next/cache";
 
 const DOCUMENTS_PER_PAGE = 6;
-const getShopItems = async (pageNumber: string | undefined = "1") => {
+const getProducts = async (pageNumber: string | undefined = "1") => {
   const skipCount =
     pageNumber === "1" ? 0 : (+pageNumber - 1) * DOCUMENTS_PER_PAGE;
   return cache(
@@ -18,4 +18,4 @@ const getShopItems = async (pageNumber: string | undefined = "1") => {
     { tags: [pageNumber] }
   )();
 };
-export default getShopItems;
+export default getProducts;

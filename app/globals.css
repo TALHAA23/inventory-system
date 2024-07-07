@@ -102,3 +102,7 @@ body {
 body:has(#menu-toggler:checked) #side-menu {
     @apply scale-x-100
 }
+
+summary {
+    list-style: none
+}

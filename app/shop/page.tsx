@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import ProductCard from "../_components/ProductCard";
-import getShopItems from "../_lib/database/getShopItems";
+import getProducts from "../_lib/database/getProducts";
 import Pagination from "../_components/Pagination";
-import { revalidatePath } from "next/cache";
+import PageSearchParams from "../_types/PageSearchParams";
 
 const DOCUMENTS_PER_PAGE = 6;
 
@@ -10,13 +10,9 @@ export const metadata: Metadata = {
   title: "Shop",
   description: "shop to buy product",
 };
-const page = async ({
-  searchParams,
-}: {
-  searchParams?: { query?: string; page?: string };
-}) => {
+const page = async ({ searchParams }: PageSearchParams) => {
   const pageNumber = searchParams?.page;
-  const data = await getShopItems(pageNumber);
+  const data = await getProducts(pageNumber);
   return (
     <section className=" m-2 text-white">
       <h1 className=" font-bold text-4xl">
