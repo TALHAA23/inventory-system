@@ -3,12 +3,12 @@ export default function takeDiscount(
   discountPercentage: number
 ): number {
   // Validate input types (optional but recommended)
-  if (
-    typeof totalValue !== "number" ||
-    typeof discountPercentage !== "number"
-  ) {
-    throw new Error("Inputs must be numbers");
-  }
+  // if (
+  //   typeof totalValue !== "number" ||
+  //   typeof discountPercentage !== "number"
+  // ) {
+  //   throw new Error("Inputs must be numbers");
+  // }
 
   // Ensure discount percentage is within valid range (0 to 100)
   if (discountPercentage < 0 || discountPercentage > 100) {

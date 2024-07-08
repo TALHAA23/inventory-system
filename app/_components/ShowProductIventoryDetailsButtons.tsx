@@ -1,12 +1,15 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const ShowProductIventoryDetailsButtons = ({ id }: { id: string }) => {
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   const handleClick = () => {
-    replace(`${pathname}?d=${id}`);
+    const query = new URLSearchParams(searchParams);
+    query.set("d", id);
+    replace(`${pathname}?${query.toString()}`);
   };
   return (
     <button

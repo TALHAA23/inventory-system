@@ -1,11 +1,29 @@
+import getPrev12monthStats from "../_lib/database/getPrev12MonthsStats";
+import getProductCurrentMonthSales from "../_lib/database/getProductCurrentMonthSales";
+import getProductOverallStats from "../_lib/database/getProductOverallStats";
+import getProductTotalInventory from "../_lib/database/getProductTotalInventory";
+import formDataForPieChart from "../_lib/utils/formDataForPieChart";
+import currentMMYY from "../_lib/utils/getCurrentMMYY";
 import LineChart from "./_charts/LineChart";
 import MultiSeriesPie from "./_charts/MultiSeriesPie";
 import HideInventoryDetailsButton from "./HideInventoryDetailsButton";
 
-const ProductInventoryDetails = ({ productId }: { productId?: string }) => {
+const ProductInventoryDetails = async ({
+  productId,
+}: {
+  productId?: string;
+}) => {
+  if (!productId) return;
+  const [overallInventory, prev12monthStats, totalInventory, salesofTheMonth] =
+    await Promise.all([
+      getProductOverallStats(productId),
+      getPrev12monthStats("for-product", productId),
+      getProductTotalInventory(productId),
+      getProductCurrentMonthSales(productId),
+    ]);
   return (
     <div
-      className={`absolute z-10 w-[calc(100%-15px)] overflow-y-auto md:w-1/2 h-[97%] bg-slate-900 text-white top-0 right-2 shadow-xl shadow-slate-800/80 rounded p-3 origin-bottom-right transition-all duration-500
+      className={`absolute z-10 w-[calc(100%-60px)] overflow-y-auto md:w-1/2 h-[97%] bg-slate-900 text-white top-0 right-2 shadow-xl shadow-slate-800/80 rounded p-3 origin-bottom-right transition-all duration-500
     ${productId ? "scale-100" : "scale-0"}
     `}
     >
@@ -16,38 +34,44 @@ const ProductInventoryDetails = ({ productId }: { productId?: string }) => {
       <div className=" my-3">
         <HeadingofInfo heading="Overall stats" />
         <div className="flex gap-2">
-          <DetailsTag />
-          <DetailsTag />
-          <DetailsTag />
+          {Object.entries(overallInventory).map(([key, value]) => (
+            <DetailsTag title={key} value={value} />
+          ))}
         </div>
       </div>
+      {prev12monthStats && (
+        <div>
+          <HeadingofInfo heading="Previous 12 month" />
+          <LineChart {...prev12monthStats} />
+        </div>
+      )}
       <div>
-        <HeadingofInfo heading="Previous 12 month" />
-        <LineChart
-          income={[10, 23, 45, 12, 34, 67, 45, 2]}
-          revenue={[34, 56, 78, 23, 45, 145, 34, 67]}
-          sales={[4, 7, 2, 10, 19, 24, 16, 13, 12]}
+        <HeadingofInfo
+          heading={`makeable cross ${currentMMYY.month} inventory data`}
         />
-      </div>
-      <div>
-        <HeadingofInfo heading="Total cross current month inventory" />
-        <MultiSeriesPie />
+        <MultiSeriesPie
+          data={formDataForPieChart(totalInventory, salesofTheMonth)}
+        />
       </div>
     </div>
   );
 };
 
-const DetailsTag = () => (
+const DetailsTag = ({ title, value }: { title: string; value: number }) => (
   <div className="grow p-4">
-    <p className="text-xs text-white/70">Sales</p>
+    <p className="text-xs text-white/70 capitalize">{title}</p>
     <h1 className="text-2xl font-bold">
-      10337 <span className="text-xs text-white/80 font-normal">units</span>
+      {value.toFixed(title == "sales" ? 0 : 2)}
+      <span className="text-xs text-white/80 font-normal">
+        {" "}
+        {title == "sales" ? "unit(s)" : "$"}
+      </span>
     </h1>
   </div>
 );
 
 const HeadingofInfo = ({ heading }: { heading: string }) => (
-  <h1 className="bg-slate-800 text-white font-bold rounded px-3 py-1 w-fit">
+  <h1 className="bg-slate-800 text-white font-bold rounded px-3 py-1 w-fit capitalize">
     {heading}
   </h1>
 );

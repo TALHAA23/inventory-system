@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 
-interface TypeProduct {
-  _id: Types.ObjectId;
+declare interface TypeProduct {
+  _id: string;
   name: string;
   qty: number;
   salesPrice: number;

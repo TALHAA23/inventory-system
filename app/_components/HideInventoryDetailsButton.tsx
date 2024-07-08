@@ -1,12 +1,15 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const HideInventoryDetailsButton = () => {
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   const handleClick = () => {
-    replace(pathname);
+    const query = new URLSearchParams(searchParams);
+    query.delete("d");
+    replace(`${pathname}${query.size ? `?${query.toString()}` : ""}`);
   };
   return (
     <img

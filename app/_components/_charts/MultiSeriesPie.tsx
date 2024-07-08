@@ -1,9 +1,12 @@
 "use client";
+import currentMMYY from "@/app/_lib/utils/getCurrentMMYY";
+import { MultiSeriesPieData } from "@/app/_types/MultiSeriesPieData";
 import { Chart, registerables } from "chart.js";
 import { useEffect, useRef } from "react";
 Chart.register(...registerables);
-const MultiSeriesPie = () => {
+const MultiSeriesPie = ({ data }: { data: MultiSeriesPieData }) => {
   const ref = useRef<null | HTMLCanvasElement>(null);
+  const month = `${currentMMYY.month}`;
   useEffect(() => {
     if (!ref.current) return;
     const ctx = ref.current.getContext("2d");
@@ -11,16 +14,23 @@ const MultiSeriesPie = () => {
     const chart = new Chart(ctx, {
       type: "pie",
       data: {
-        labels: ["A", "a", "B", "b", "C", "c"],
+        labels: [
+          "possible revenue",
+          `${month} revenue`,
+          "possible income",
+          `${month} income`,
+          "sales",
+          `${month} sales`,
+        ],
         datasets: [
           {
-            data: [10, 40],
+            data: data.revenue,
           },
           {
-            data: [30, 40],
+            data: data.income,
           },
           {
-            data: [10, 2],
+            data: data.sales,
           },
         ],
       },
@@ -28,7 +38,13 @@ const MultiSeriesPie = () => {
     return () => chart.destroy();
   }, []);
 
-  return <canvas ref={ref}></canvas>;
+  return (
+    <canvas
+      ref={ref}
+      aria-label="multi series pie to show total makeable inventory cross this month inventory"
+      role="img"
+    ></canvas>
+  );
 };
 
 export default MultiSeriesPie;

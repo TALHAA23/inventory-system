@@ -8,7 +8,7 @@ const page = async ({ searchParams }: PageSearchParams) => {
   const page = searchParams?.page;
   const data = await getProducts(page);
   return (
-    <section className=" min-h-[calc(100vh-60px)] bg-color-4 m-1 rounded overflow-hidden p-3 space-y-2">
+    <section className="relative min-h-[calc(100vh-60px)] bg-color-4 m-1 rounded overflow-hidden p-3 space-y-2">
       <p className="text-xs rounded p-2 bg-yellow-300/35 text-yellow-950 w-fit ml-auto">
         <span className="font-semibold">Good to know:</span> Tap on product will
         open detail about that product

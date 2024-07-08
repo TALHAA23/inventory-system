@@ -2,11 +2,15 @@ import Inventory from "@/app/_types/Inventory";
 import getTodayInventory from "../database/getTodayInventory";
 import getTotalInventory from "../database/getTotalInventory";
 import { unstable_cache as cache } from "next/cache";
+import zeroInventoryInfo from "./zeroInventoryInfo";
 
 const calculateInventoryPercentagesForToday = cache(
   async () => {
     const totalInventory = await getTotalInventory();
     const todayInventory = await getTodayInventory();
+
+    if (!todayInventory) return zeroInventoryInfo;
+
     const percentages: Inventory = {
       income: 0,
       revenue: 0,
@@ -27,7 +31,7 @@ const calculateInventoryPercentagesForToday = cache(
     return percentages;
   },
   ["todays-inventory-info"],
-  { tags: ["todays-invetory-info"] }
+  { tags: ["todays-inventory-info"] }
 );
 
 export default calculateInventoryPercentagesForToday;

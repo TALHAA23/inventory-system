@@ -37,11 +37,22 @@ const ProductCard_Listing = ({ props }: { props: ExtendedTypeProduct }) => {
         </div>
         <div className="grow flex flex-col justify-between">
           <div className="p-4 flex gap-5 flex-wrap">
-            {Object.entries(props)
-              .filter(([key]) => key !== "__v")
-              .map(([key, value]) => (
-                <DetailsTag title={key} value={value} />
-              ))}
+            {/* {Object.entries(props).map(([key, value]) => (
+              <DetailsTag title={key} value={value} />
+            ))} */}
+            {[
+              ["_id", props._id],
+              ["name", props.name],
+              ["category", props.category],
+              ["quantity", props.qty],
+              ["original Price", props.originalPrice],
+              ["sales Price", props.salesPrice],
+              ["discount", props.discount],
+              ["discount price", props.discountPrice],
+              ["income", props.income],
+            ].map(([key, value]) => (
+              <DetailsTag title={key as string} value={value} />
+            ))}
           </div>
           <ShowProductIventoryDetailsButtons id={props._id.toString()} />
         </div>
@@ -58,7 +69,7 @@ const DetailsTag = ({
   value: string | number;
 }) => (
   <div className="grow">
-    <p className="text-xs text-white/70">{title}</p>
+    <p className="text-xs text-white/70 capitalize">{title}</p>
     <h1
       className={`text-sm border-b border-slate-900 ${
         title == "income" &&
@@ -66,8 +77,7 @@ const DetailsTag = ({
         "text-red-800 font-semibold"
       }`}
     >
-      {value}
-      {title == "discount" ? "%" : ""}
+      {title == "discount" ? `${value}%` : value}
     </h1>
   </div>
 );
