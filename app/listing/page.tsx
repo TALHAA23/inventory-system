@@ -1,6 +1,9 @@
+import { Suspense } from "react";
+import Form from "../_components/Form";
 import Pagination from "../_components/Pagination";
 import ProductCard_Listing from "../_components/ProductCard_Listing";
 import ProductInventoryDetails from "../_components/ProductInventoryDetails";
+import ShowMutationFormButton from "../_components/ShowMutationFormButton";
 import getProducts from "../_lib/database/getProducts";
 import PageSearchParams from "../_types/PageSearchParams";
 const DOCUMENTS_PER_PAGE = 6;
@@ -13,7 +16,11 @@ const page = async ({ searchParams }: PageSearchParams) => {
         <span className="font-semibold">Good to know:</span> Tap on product will
         open detail about that product
       </p>
-      <Pagination disabled={data.length < DOCUMENTS_PER_PAGE} />
+      <div className="flex justify-between flex-col sm:flex-row gap-1">
+        <ShowMutationFormButton buttonFor="addnew" />
+        <Pagination disabled={data.length < DOCUMENTS_PER_PAGE} />
+      </div>
+      <Form searchParams={searchParams} />
       <Header />
       <ProductInventoryDetails productId={searchParams?.d} />
       {data.map((product) => (

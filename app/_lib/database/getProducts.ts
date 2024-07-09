@@ -15,7 +15,7 @@ const getProducts = async (pageNumber: string | undefined = "1") => {
       return documents;
     },
     [pageNumber],
-    { tags: [pageNumber] }
+    { tags: [pageNumber, "all-products"] }
   )();
 };
 export default getProducts;

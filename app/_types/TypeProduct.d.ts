@@ -8,6 +8,7 @@ declare interface TypeProduct {
   originalPrice: number;
   discount: number;
   category: string;
+  [key: string]: any;
 }
 
 export type { TypeProduct };

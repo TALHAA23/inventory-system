@@ -1,0 +1,3 @@
+.button {
+    @apply text-white font-bold bg-yellow-800 w-28 py-2 rounded-full mx-1 hover:opacity-80
+}

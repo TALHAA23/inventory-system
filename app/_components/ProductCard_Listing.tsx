@@ -1,6 +1,7 @@
 import { TypeProduct } from "../_types/TypeProduct";
 import takeDiscount from "../_lib/utils/takeDiscount";
 import ShowProductIventoryDetailsButtons from "./ShowProductIventoryDetailsButtons";
+import ShowMutationFormButton from "./ShowMutationFormButton";
 interface ExtendedTypeProduct extends TypeProduct {
   income?: string;
   discountPrice?: string;
@@ -54,7 +55,13 @@ const ProductCard_Listing = ({ props }: { props: ExtendedTypeProduct }) => {
               <DetailsTag title={key as string} value={value} />
             ))}
           </div>
-          <ShowProductIventoryDetailsButtons id={props._id.toString()} />
+          <div className="flex justify-end">
+            <ShowMutationFormButton
+              buttonFor="update"
+              id={props._id.toString()}
+            />
+            <ShowProductIventoryDetailsButtons id={props._id.toString()} />
+          </div>
         </div>
       </div>
     </details>

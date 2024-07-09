@@ -1,24 +1,24 @@
 "use client";
-
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const ShowProductIventoryDetailsButtons = ({ id }: { id: string }) => {
-  const searchParams = useSearchParams();
+const AddDummeyProductButton = () => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { replace } = useRouter();
   const handleClick = () => {
     const query = new URLSearchParams(searchParams);
-    query.set("d", id);
+    query.set("dummeyProduct", "true");
     replace(`${pathname}?${query.toString()}`);
   };
   return (
     <button
       onClick={handleClick}
-      className=" text-white font-bold bg-green-800 w-28 py-2 rounded-full mx-1 hover:opacity-80"
+      type="button"
+      className=" text-xs bg-cyan-400 rounded  py-2 font-bold text-black"
     >
-      More
+      Create dummey product
     </button>
   );
 };
 
-export default ShowProductIventoryDetailsButtons;
+export default AddDummeyProductButton;

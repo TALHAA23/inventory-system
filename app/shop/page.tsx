@@ -3,6 +3,7 @@ import ProductCard from "../_components/ProductCard";
 import getProducts from "../_lib/database/getProducts";
 import Pagination from "../_components/Pagination";
 import PageSearchParams from "../_types/PageSearchParams";
+import { revalidatePath } from "next/cache";
 
 const DOCUMENTS_PER_PAGE = 6;
 

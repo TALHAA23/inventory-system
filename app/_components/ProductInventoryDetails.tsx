@@ -23,12 +23,14 @@ const ProductInventoryDetails = async ({
     ]);
   return (
     <div
-      className={`absolute z-10 w-[calc(100%-60px)] overflow-y-auto md:w-1/2 h-[97%] bg-slate-900 text-white top-0 right-2 shadow-xl shadow-slate-800/80 rounded p-3 origin-bottom-right transition-all duration-500
+      className={`fixed top-[55px] right-2 z-10 w-[calc(100%-10px)] max-w-[500px] h-[calc(100%-70px)] overflow-y-auto bg-slate-900 text-white shadow-xl shadow-slate-800/80 rounded p-3 origin-bottom-right transition-all duration-500
     ${productId ? "scale-100" : "scale-0"}
     `}
     >
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Product inventory details</h1>
+        <h1 className="text-xl sm:text-2xl font-bold">
+          Product inventory details
+        </h1>
         <HideInventoryDetailsButton />
       </div>
       <div className=" my-3">
