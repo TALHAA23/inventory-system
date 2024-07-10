@@ -4,6 +4,7 @@ import serverActionDefaultResponse from "@/app/_lib/utils/serverActionDefaultRes
 import productSchema from "@/app/_lib/utils/typeSafty/productSchema";
 import { TypeProduct } from "@/app/_types/TypeProduct";
 const update = async (existingProduct: TypeProduct, formData: FormData) => {
+  console.log("Updating...");
   const docId = existingProduct._id;
   const modifiedFormData: Partial<TypeProduct> = productSchema.parse(
     Object.fromEntries(formData.entries())
@@ -11,9 +12,16 @@ const update = async (existingProduct: TypeProduct, formData: FormData) => {
   for (let key in modifiedFormData)
     if (modifiedFormData[key] === existingProduct[key])
       delete modifiedFormData[key];
-  if (!Object.keys(modifiedFormData).length) return;
-  await mutateProductById(docId, modifiedFormData);
-  return serverActionDefaultResponse;
+  if (!Object.keys(modifiedFormData).length) {
+    throw new Error("Nothing to update");
+  }
+  try {
+    throw new Error();
+    await mutateProductById(docId, modifiedFormData);
+    return serverActionDefaultResponse;
+  } catch (err) {
+    throw new Error("Couldn't update product at the movement!");
+  }
 };
 
 export default update;

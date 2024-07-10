@@ -19,12 +19,12 @@ const Pagination = ({ disabled }: { disabled?: boolean }) => {
             <button
               onClick={() => handleClick(pageNumber)}
               disabled={pageNumber > page && disabled}
-              className={`rounded bg-white text-black aspect-square p-2 w-9 text-center disabled:opacity-60 disabled:cursor-not-allowed ${
+              className={`rounded  text-black aspect-square p-2 w-9 text-center disabled:opacity-60 disabled:cursor-not-allowed ${
                 !page
-                  ? "first:bg-cyan-800 first:text-white first:font-bold"
+                  ? "first:bg-cyan-800 first:text-white first:font-bold bg-white"
                   : page == pageNumber
                   ? " bg-cyan-800 text-white font-bold"
-                  : ""
+                  : "bg-white"
               } `}
             >
               {pageNumber}

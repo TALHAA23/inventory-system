@@ -22,6 +22,7 @@ const ShowMutationFormButton = ({
     const formEl = document.querySelector("#mutation-form");
     if (formEl) (formEl as HTMLDialogElement).showModal();
   };
+
   return (
     <button
       onClick={handleClick}

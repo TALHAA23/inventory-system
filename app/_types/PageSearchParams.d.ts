@@ -6,6 +6,7 @@ declare interface PageSearchParams {
     addnew?: string;
     update?: string;
     dummeyProduct?: string;
+    restock?: string;
   };
 }
 

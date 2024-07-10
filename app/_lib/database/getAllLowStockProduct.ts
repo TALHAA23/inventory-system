@@ -5,7 +5,7 @@ import { unstable_cache as cache } from "next/cache";
 
 const LOW_STOCK_THRESHOD_VALUE = 15;
 
-const getLowStockProducts = cache(
+const getAllLowStockProducts = cache(
   async () => {
     await connectToDB();
     const pipeLine: mongoose.PipelineStage[] = [
@@ -27,15 +27,12 @@ const getLowStockProducts = cache(
           qty: 1,
         },
       },
-      {
-        $limit: 4,
-      },
     ];
     const docs = await Product.aggregate(pipeLine);
     return docs;
   },
-  ["low-stock-products"],
-  { tags: ["low-stock-products"] }
+  ["low-stock-products-all"],
+  { tags: ["low-stock-products-all"] }
 );
 
-export default getLowStockProducts;
+export default getAllLowStockProducts;

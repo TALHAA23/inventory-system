@@ -6,6 +6,8 @@ import create from "../listing/server-actions/create.server";
 import update from "../listing/server-actions/update.server";
 import AddDummeyProductButton from "./AddDummeyProductButton";
 import { faker } from "@faker-js/faker";
+import FormStatus from "./FormStatus";
+import TestForm from "./TestForm";
 
 const formFields = [
   ["name", "text"],
@@ -21,12 +23,14 @@ const Form = async ({ searchParams }: PageSearchParams) => {
   const isAddingDummeyProduct = searchParams?.dummeyProduct !== undefined;
   const doc = isMutationForm
     ? await getProductById(searchParams.update as string)
-    : isAddingDummeyProduct
-    ? createDummeyProduct()
     : "";
+  //  isAddingDummeyProduct
+  // ? createDummeyProduct()
+  // : "";
   const updateWithExistingProduct = isMutationForm
     ? update.bind(null, doc)
     : "";
+
   return (
     <Suspense fallback="loading product...">
       <div>
@@ -41,10 +45,15 @@ const Form = async ({ searchParams }: PageSearchParams) => {
                 {isMutationForm ? `Update ${doc.name}` : "Add New Product"}
               </h1>
               <HideMutationFormButton />
-              <form
+              <TestForm searchParams={searchParams} data={doc} />
+              {/* <form
                 action={isMutationForm ? updateWithExistingProduct : create}
                 className="space-y-1"
               >
+                <FormStatus
+                  tailwindClasses="text-center"
+                  queryKeyToDelete={["addnew", "update", "dummeyProduct"]}
+                />
                 {formFields.map(([title, type, props]) => (
                   <div className="flex flex-col gap-1 group">
                     <label
@@ -76,7 +85,7 @@ const Form = async ({ searchParams }: PageSearchParams) => {
                     Submit
                   </button>
                 </div>
-              </form>
+              </form> */}
             </>
           ) : (
             <small className=" text-center my-5">

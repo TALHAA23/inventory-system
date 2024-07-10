@@ -6,7 +6,14 @@ import ProductInventoryDetails from "../_components/ProductInventoryDetails";
 import ShowMutationFormButton from "../_components/ShowMutationFormButton";
 import getProducts from "../_lib/database/getProducts";
 import PageSearchParams from "../_types/PageSearchParams";
+import { Metadata } from "next";
 const DOCUMENTS_PER_PAGE = 6;
+
+export const metadata: Metadata = {
+  title: "listing",
+  description: "details about all the product in inventory",
+};
+
 const page = async ({ searchParams }: PageSearchParams) => {
   const page = searchParams?.page;
   const data = await getProducts(page);
