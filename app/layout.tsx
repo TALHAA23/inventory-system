@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ToastContainer position="top-right" />
-        <div className="lg:grid grid-cols-[300px_auto]">
+        <div className="lg:grid grid-cols-[300px_auto] min-h-screen">
           <SideMenu />
           <section>
             <NavBar />

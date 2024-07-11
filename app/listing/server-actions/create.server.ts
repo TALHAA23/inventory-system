@@ -11,12 +11,12 @@ const create = async (formData: FormData) => {
   for (const key in modifiedFormData)
     if (key.startsWith("$ACTION")) delete modifiedFormData[key];
   try {
-    await new Promise((res) => setTimeout(res, 5000));
-    throw new Error();
-    const res = await createNewProduct(modifiedFormData);
-    return serverActionDefaultResponse;
+    await createNewProduct(modifiedFormData);
+    return serverActionDefaultResponse({
+      message: "Product uploaded successfully",
+    });
   } catch (err) {
-    throw new Error("Couldn't upload product, please try later!");
+    return serverActionDefaultResponse({ error: (err as Error).message });
   }
 };
 

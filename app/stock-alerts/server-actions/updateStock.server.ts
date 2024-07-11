@@ -7,8 +7,12 @@ const updateStock = async (docId: string, formData: FormData) => {
   if (!formData.get("qty"))
     throw new Error("Quantity not provided to re-stock");
   const data = { qty: parseInt(formData.get("qty") as string) };
-  await mutateProductById(docId, data);
-  return serverActionDefaultResponse;
+  try {
+    await mutateProductById(docId, data);
+    return serverActionDefaultResponse({ message: "Restocked Successsfully" });
+  } catch (err) {
+    return serverActionDefaultResponse({ error: (err as Error).message });
+  }
 };
 
 export default updateStock;

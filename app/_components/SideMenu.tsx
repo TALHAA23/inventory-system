@@ -14,7 +14,7 @@ const SideMenu = () => {
   return (
     <aside
       id="side-menu"
-      className="bg-color-2 scale-x-0 origin-left lg:scale-x-100 fixed h-full w-[300px] lg:sticky lg:max-h-screen lg:w-auto top-0 capitalize text-white gap-2 flex items-center transition-all duration-100 ease-in"
+      className="bg-color-2 scale-x-0 origin-left lg:scale-x-100 fixed z-50 h-full w-[300px] lg:sticky lg:max-h-screen lg:w-auto top-0 capitalize text-white gap-2 flex items-center transition-all duration-100 ease-in"
     >
       <ul className="w-full mx-2 space-y-1">
         {NavLinks.map((item) => (

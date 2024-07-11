@@ -7,24 +7,37 @@ import ShowRestockingFormButton from "../_components/ShowRestockingFormButton";
 import PageSearchParams from "../_types/PageSearchParams";
 import updateStock from "./server-actions/updateStock.server";
 import FormStatus from "../_components/FormStatus";
+import RestockingForm from "../_components/RestockingForm";
 
 const page = async ({ searchParams }: PageSearchParams) => {
   const data = await getAllLowStockProducts();
-  const dataset2 = await demandingAndLowStockProducts();
+  const dataset2 = (await demandingAndLowStockProducts())?.map(
+    (item) => item.product
+  );
+
   return (
-    <section className="relative m-2 bg-color-4 text-white p-2 rounded min-h-[calc(100%-75px)] space-y-2">
+    <section className="relative m-2 bg-color-4 text-white p-2 rounded min-h-[calc(100vh-80px)] space-y-2">
       <h1 className=" text-2xl font-bold">Low Stock Alerts</h1>
       <div>
         <HeadingofInfo
           heading={`Demanding prodcuts of ${currentMMYY.month} with low stock value`}
         />
-        <CreateContainers data={dataset2.map((item) => item.product)} />
+        <CreateContainers data={dataset2} />
       </div>
       <div>
         <HeadingofInfo heading="Other Low on stock products" />
         <CreateContainers data={data} />
       </div>
-      {searchParams?.restock && <Form restockId={searchParams.restock} />}
+      {searchParams?.restock && (
+        <RestockingForm
+          restockId={searchParams.restock}
+          currentStock={
+            [...data, ...dataset2].find(
+              (item) => item._id === searchParams.restock
+            )?.qty
+          }
+        />
+      )}
     </section>
   );
 };
@@ -61,27 +74,30 @@ const CreateContainers = ({ data }: { data: Partial<TypeProduct>[] }) => {
   );
 };
 
-const Form = ({ restockId }: { restockId: string }) => {
-  const updateStockWithId = updateStock.bind(null, restockId);
-  return (
-    <div className="absolute right-2 top-2 rounded bg-slate-900 p-2">
-      {restockId ? (
-        <form action={updateStockWithId}>
-          <label htmlFor="qty" className=" block text-xs text-white/75">
-            How much you want to re-stock?
-          </label>
-          <input
-            type="number"
-            name="qty"
-            id="qty"
-            className="w-full bg-transparent focus:outline-none border-b-2 border-white focus:border-cyan-800"
-          />
-          <FormStatus queryKeyToDelete={["restock"]} />
-        </form>
-      ) : (
-        <small>waiting for URL Search params</small>
-      )}
-    </div>
-  );
-};
+// const Form = ({ restockId }: { restockId: string }) => {
+//   const updateStockWithId = updateStock.bind(null, restockId);
+//   return (
+//     <div className="absolute right-2 top-2 rounded bg-slate-900 p-2">
+//       {restockId ? (
+//         <form action={updateStockWithId}>
+//           <label htmlFor="qty" className=" block text-xs text-white/75">
+//             How much you want to re-stock?
+//           </label>
+//           <p className=" text-center text-xs text-red-800">
+//             something went wrong
+//           </p>
+//           <input
+//             type="number"
+//             name="qty"
+//             id="qty"
+//             className="w-full bg-transparent focus:outline-none border-b-2 border-white focus:border-cyan-800"
+//           />
+//           <FormStatus queryKeyToDelete={["restock"]} />
+//         </form>
+//       ) : (
+//         <small>waiting for URL Search params</small>
+//       )}
+//     </div>
+//   );
+// };
 export default page;

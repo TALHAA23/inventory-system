@@ -2,7 +2,7 @@
 import { Flat } from "@alptugidin/react-circular-progress-bar";
 const ProgressBar = ({ progress }: { progress: number }) => {
   return (
-    <div className="h-full aspect-square">
+    <div className="h-full aspect-square z-10">
       <Flat
         progress={progress}
         range={{ from: 0, to: 100 }}

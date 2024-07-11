@@ -8,11 +8,13 @@ const FormStatus = ({
   loadingText,
   onsuccessText,
   queryKeyToDelete = [],
+  error,
   tailwindClasses = "",
 }: {
   loadingText?: string;
   onsuccessText?: string;
   queryKeyToDelete?: string[];
+  error?: any;
   tailwindClasses?: string;
 }) => {
   const isSubmitting = useRef(false);
@@ -21,8 +23,9 @@ const FormStatus = ({
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   useEffect(() => {
+    console.log(error);
     if (formState.pending) isSubmitting.current = true;
-    if (isSubmitting.current && !formState.pending) {
+    if (isSubmitting.current && !formState.pending && !error) {
       const query = new URLSearchParams(searchParams);
       queryKeyToDelete.map((key) => query.delete(key));
       replace(`${pathname}${query.size ? `?${query.toString()}` : ""}`);

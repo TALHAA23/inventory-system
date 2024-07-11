@@ -11,6 +11,7 @@
   "dependencies": {
     "@alptugidin/react-circular-progress-bar": "^1.1.2",
     "@coreui/react": "^5.1.0",
+    "@react-pdf/renderer": "^3.4.4",
     "chart.js": "^4.4.3",
     "dayjs": "^1.11.11",
     "mongodb": "^6.8.0",

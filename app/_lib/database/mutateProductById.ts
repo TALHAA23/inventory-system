@@ -8,8 +8,11 @@ const mutateProductById = async (
   updates: Partial<TypeProduct>
 ) => {
   await connectToDB();
-  const doc = await Product.findByIdAndUpdate(docId, updates);
-  if (doc.qty !== updates.qty)
+  const doc = await Product.findById(docId);
+  if (!updates.qty) throw new Error("Restock value not found");
+  if (updates?.qty > doc.qty) {
+    doc.qty = updates.qty;
+    doc.save();
     [
       "all-products",
       `${docId}-total-inventory`,
@@ -18,7 +21,8 @@ const mutateProductById = async (
       "demanding-and-low-stock",
       `product-${docId}`,
     ].map((tag) => revalidateTag(tag));
-  return doc;
+    return doc;
+  } else throw new Error("Restock value can't be less or same to existing one");
 };
 
 export default mutateProductById;

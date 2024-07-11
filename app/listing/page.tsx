@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Form from "../_components/Form";
+import DialogBox from "../_components/DialogBox";
 import Pagination from "../_components/Pagination";
 import ProductCard_Listing from "../_components/ProductCard_Listing";
 import ProductInventoryDetails from "../_components/ProductInventoryDetails";
@@ -27,7 +27,7 @@ const page = async ({ searchParams }: PageSearchParams) => {
         <ShowMutationFormButton buttonFor="addnew" />
         <Pagination disabled={data.length < DOCUMENTS_PER_PAGE} />
       </div>
-      <Form searchParams={searchParams} />
+      <DialogBox searchParams={searchParams} />
       <Header />
       <ProductInventoryDetails productId={searchParams?.d} />
       {data.map((product) => (
