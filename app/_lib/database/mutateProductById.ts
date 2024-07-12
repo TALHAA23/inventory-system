@@ -15,6 +15,7 @@ const mutateProductById = async (
     doc.save();
     [
       "all-products",
+      "all-products-endpoint",
       `${docId}-total-inventory`,
       "todays-inventory-info",
       "low-stock-products-all",
