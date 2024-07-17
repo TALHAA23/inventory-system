@@ -9,6 +9,7 @@ const AmountSummaryCard = async ({ title }: Props) => {
     getOverallStats(),
     calculateInventoryPercentagesForToday(),
   ]);
+
   const isSalesCard = title == "Sales";
   return (
     <div className="grow flex justify-between items-center bg-color-6 p-4 rounded h-[100px] gap-4">

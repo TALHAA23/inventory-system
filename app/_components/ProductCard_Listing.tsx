@@ -38,9 +38,6 @@ const ProductCard_Listing = ({ props }: { props: ExtendedTypeProduct }) => {
         </div>
         <div className="grow flex flex-col justify-between">
           <div className="p-4 flex gap-5 flex-wrap">
-            {/* {Object.entries(props).map(([key, value]) => (
-              <DetailsTag title={key} value={value} />
-            ))} */}
             {[
               ["_id", props._id],
               ["name", props.name],

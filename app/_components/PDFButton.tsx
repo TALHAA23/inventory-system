@@ -41,7 +41,7 @@ const PDFButton = ({
   return (
     <button
       onClick={handleClick}
-      className={`w-fit mt-2 px-3 py-2 rounded-full font-bold text-sm text-white disabled:opacity-80 disabled:cursor-not-allowed ${
+      className={` mt-auto w-fit mt-2 px-3 py-2 rounded-full font-bold text-sm text-white disabled:opacity-80 disabled:cursor-not-allowed ${
         error ? "bg-red-700" : "bg-green-800"
       }`}
     >

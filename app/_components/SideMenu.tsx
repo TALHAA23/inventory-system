@@ -18,10 +18,12 @@ const SideMenu = () => {
     >
       <ul className="w-full mx-2 space-y-1">
         {NavLinks.map((item) => (
-          <li className="menu-list-item w-full px-2 py-1 rounded  onHover-bg-color-5 hover:font-bold">
+          <li className="menu-list-item w-full px-2 rounded  onHover-bg-color-5 hover:font-bold">
             <Link
               href={item.path}
-              className={pathname == item.path ? "block active-link" : "block"}
+              className={
+                pathname == item.path ? "block active-link py-1" : "block py-1"
+              }
             >
               {item.title}
             </Link>

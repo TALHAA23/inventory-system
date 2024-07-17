@@ -1,11 +1,12 @@
-import { Document, Page, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, StyleSheet, View, Text } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
     backgroundColor: "#E4E4E4",
-    padding: "10px",
+    padding: "20px",
   },
+
   table: {
     width: "100%",
     display: "flex",
@@ -33,10 +34,39 @@ const styles = StyleSheet.create({
   },
 });
 
-const MonthlyRecordPdf = () => {
+interface Data {
+  month: string;
+  data: { income: number; revenue: number; sales: number };
+}
+
+const MonthlyRecordPdf = ({ data }: { data: Data[][] }) => {
   return (
     <Document>
       <Page style={styles.page}></Page>
+      <View style={styles.table}>
+        <View style={styles.row}>
+          <Text style={styles.heading}>Month</Text>
+          <Text style={styles.heading}>Revenue</Text>
+          <Text style={styles.heading}>Income</Text>
+          <Text style={styles.heading}>Sales</Text>
+        </View>
+        {data.map((year) =>
+          year.map((month) => (
+            <View style={styles.row}>
+              <Text style={styles.cell}>{month?.month}</Text>
+              <Text style={styles.cell}>
+                {month?.data?.revenue?.toFixed(2) || "Nil"}
+              </Text>
+              <Text style={styles.cell}>
+                {month?.data?.income?.toFixed(2) || "Nil"}
+              </Text>
+              <Text style={styles.cell}>
+                {month?.data?.sales?.toFixed(2) || "Nil"}
+              </Text>
+            </View>
+          ))
+        )}
+      </View>
     </Document>
   );
 };

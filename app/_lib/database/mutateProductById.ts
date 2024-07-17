@@ -20,6 +20,7 @@ const mutateProductById = async (
       "todays-inventory-info",
       "low-stock-products-all",
       "demanding-and-low-stock",
+      "monthly-recored-for-pdf",
       `product-${docId}`,
     ].map((tag) => revalidateTag(tag));
     return doc;
