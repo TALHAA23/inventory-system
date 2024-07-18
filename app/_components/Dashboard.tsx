@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import AmountSummaryCard from "./AmountSummaryCard";
 import PopularListings from "./PopularListings";
 import LineChart from "./_charts/LineChart";
@@ -7,6 +7,8 @@ import getTopSellingProducts from "../_lib/database/getTopSales";
 import getLowStockProducts from "../_lib/database/getLowStockProducts";
 import AmountSummaryCardSkeleton from "./Skeletons/AmountSummaryCardSkeleton";
 import PopularListingsSkeleton from "./Skeletons/PopularListingsSkeleton";
+import ErrorPage from "../error";
+import ErrorBoundary from "./ErrorBoundary";
 
 const cards = ["Income", "Revenue", "Sales"].map((card) => (
   <Suspense fallback={<AmountSummaryCardSkeleton />}>
@@ -24,17 +26,28 @@ const Dashboard = () => {
         }
       >
         {getPrevious12MonthsStats().then((data) => (
-          <LineChart {...data} />
+          <LineChart data={data} />
         ))}
       </Suspense>
       <div className="flex flex-wrap gap-0">
-        <Suspense fallback={<PopularListingsSkeleton />}>
-          <PopularListings metadata="sales" promise={getTopSellingProducts} />
-        </Suspense>
+        <ErrorBoundary FallbackComponent={ErrorComponent}>
+          <Suspense fallback={<PopularListingsSkeleton />}>
+            <PopularListings metadata="sales" promise={getTopSellingProducts} />
+          </Suspense>
+        </ErrorBoundary>
+
         <Suspense fallback={<PopularListingsSkeleton />}>
           <PopularListings metadata="low stock" promise={getLowStockProducts} />
         </Suspense>
       </div>
+    </div>
+  );
+};
+
+const ErrorComponent: React.FC = () => {
+  return (
+    <div className="error-message">
+      <h1>Error</h1> {/* You can add more content here */}
     </div>
   );
 };
