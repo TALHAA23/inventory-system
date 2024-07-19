@@ -3,7 +3,8 @@ import ProductCard from "../_components/ProductCard";
 import getProducts from "../_lib/database/getProducts";
 import Pagination from "../_components/Pagination";
 import PageSearchParams from "../_types/PageSearchParams";
-import { revalidatePath } from "next/cache";
+import { TypeProduct } from "../_types/TypeProduct";
+import ComponentError from "../_components/ComponentError";
 
 const DOCUMENTS_PER_PAGE = 6;
 
@@ -27,10 +28,14 @@ const page = async ({ searchParams }: PageSearchParams) => {
         stock alerts, charts, movements can be recorded to make it dynamic
       </p>
       <div className="bg-color-10 rounded p-3">
-        <Pagination disabled={data.length < DOCUMENTS_PER_PAGE} />
-        {data.map((product) => (
-          <ProductCard props={product} />
-        ))}
+        <Pagination disabled={data.data?.length < DOCUMENTS_PER_PAGE} />
+        {data?.error ? (
+          <ComponentError errorMessage={data.error} />
+        ) : (
+          data.data?.map((product: TypeProduct) => (
+            <ProductCard props={product} />
+          ))
+        )}
       </div>
     </section>
   );

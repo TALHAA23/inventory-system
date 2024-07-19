@@ -3,10 +3,12 @@ import connectToDB from "../utils/database";
 import Product from "@/app/_models/product";
 import { unstable_cache as cache } from "next/cache";
 import Inventory from "@/app/_types/Inventory";
+import response from "../utils/response";
+import DatabaseResponse from "@/app/_types/DatabaseResponse";
 
 const getProductTotalInventory = async (docId: string) => {
   return cache(
-    async (): Promise<Inventory> => {
+    async (): Promise<DatabaseResponse<Inventory>> => {
       await connectToDB();
       const pipeLine: PipelineStage[] = [
         {
@@ -58,9 +60,12 @@ const getProductTotalInventory = async (docId: string) => {
           },
         },
       ];
-
-      const doc = await Product.aggregate(pipeLine);
-      return doc[0];
+      try {
+        const doc = await Product.aggregate(pipeLine);
+        return response({ data: doc[0] });
+      } catch (err) {
+        return response({ error: "Fail to get product inventory details!" });
+      }
     },
     [`${docId}-total-inventory`],
     {

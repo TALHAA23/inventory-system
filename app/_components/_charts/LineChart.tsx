@@ -1,11 +1,13 @@
 "use client";
 import getPrev12MonthNames from "@/app/_lib/utils/getPrev12MonthNames";
+import DatabaseResponse from "@/app/_types/DatabaseResponse";
 import { LineChartData } from "@/app/_types/LineChartData";
 import { Chart, registerables } from "chart.js";
 import { useEffect, useRef } from "react";
+import ComponentError from "../ComponentError";
 Chart.register(...registerables);
 
-const LineChart = ({ sales, revenue, income }: LineChartData) => {
+const LineChart = ({ data, error }: DatabaseResponse<LineChartData>) => {
   const chartRef = useRef<null | HTMLCanvasElement>(null);
   useEffect(() => {
     if (!chartRef.current) return;
@@ -18,15 +20,15 @@ const LineChart = ({ sales, revenue, income }: LineChartData) => {
         datasets: [
           {
             label: "income",
-            data: income,
+            data: data?.income,
           },
           {
             label: "revenue",
-            data: revenue,
+            data: data?.revenue,
           },
           {
             label: "sales",
-            data: sales,
+            data: data?.sales,
           },
         ],
       },
@@ -36,7 +38,11 @@ const LineChart = ({ sales, revenue, income }: LineChartData) => {
 
   return (
     <div className="w-[98%] mx-auto my-5 h-fit border-2 rounded border-gray-500">
-      <canvas ref={chartRef}></canvas>
+      {error ? (
+        <ComponentError errorMessage={error} />
+      ) : (
+        <canvas ref={chartRef}></canvas>
+      )}
     </div>
   );
 };

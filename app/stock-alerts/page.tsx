@@ -1,19 +1,15 @@
-import Head from "next/head";
 import demandingAndLowStockProducts from "../_lib/database/demandingAndLowStockProducts";
 import getAllLowStockProducts from "../_lib/database/getAllLowStockProduct";
 import currentMMYY from "../_lib/utils/getCurrentMMYY";
 import { TypeProduct } from "../_types/TypeProduct";
 import ShowRestockingFormButton from "../_components/ShowRestockingFormButton";
 import PageSearchParams from "../_types/PageSearchParams";
-import updateStock from "./server-actions/updateStock.server";
-import FormStatus from "../_components/FormStatus";
 import RestockingForm from "../_components/RestockingForm";
+import ComponentError from "../_components/ComponentError";
 
 const page = async ({ searchParams }: PageSearchParams) => {
   const data = await getAllLowStockProducts();
-  const dataset2 = (await demandingAndLowStockProducts())?.map(
-    (item) => item.product
-  );
+  const dataset2 = await demandingAndLowStockProducts();
 
   return (
     <section className="relative m-2 bg-color-4 text-white p-2 rounded min-h-[calc(100vh-80px)] space-y-2">
@@ -22,17 +18,27 @@ const page = async ({ searchParams }: PageSearchParams) => {
         <HeadingofInfo
           heading={`Demanding prodcuts of ${currentMMYY.month} with low stock value`}
         />
-        <CreateContainers data={dataset2} />
+        {dataset2?.error ? (
+          <ComponentError errorMessage={dataset2.error} />
+        ) : (
+          <CreateContainers
+            data={dataset2.data.map((item: any) => item.product)}
+          />
+        )}
       </div>
       <div>
         <HeadingofInfo heading="Other Low on stock products" />
-        <CreateContainers data={data} />
+        {data?.error ? (
+          <ComponentError errorMessage={data.error} />
+        ) : (
+          <CreateContainers data={data.data} />
+        )}
       </div>
       {searchParams?.restock && (
         <RestockingForm
           restockId={searchParams.restock}
           currentStock={
-            [...data, ...dataset2].find(
+            [...data.data, ...dataset2.data].find(
               (item) => item._id === searchParams.restock
             )?.qty
           }

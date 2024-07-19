@@ -1,5 +1,4 @@
 "use client";
-import React, { cache } from "react";
 import PDFButton from "../_components/PDFButton";
 import AllProductsPdf from "../_components/Pdf/AllProductsPdf";
 import MonthlyRecordPdf from "../_components/Pdf/MonthlyRecordPdf";

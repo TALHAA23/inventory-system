@@ -7,6 +7,8 @@ import ShowMutationFormButton from "../_components/ShowMutationFormButton";
 import getProducts from "../_lib/database/getProducts";
 import PageSearchParams from "../_types/PageSearchParams";
 import { Metadata } from "next";
+import { TypeProduct } from "../_types/TypeProduct";
+import ComponentError from "../_components/ComponentError";
 const DOCUMENTS_PER_PAGE = 6;
 
 export const metadata: Metadata = {
@@ -25,14 +27,18 @@ const page = async ({ searchParams }: PageSearchParams) => {
       </p>
       <div className="flex justify-between flex-col sm:flex-row gap-1">
         <ShowMutationFormButton buttonFor="addnew" />
-        <Pagination disabled={data.length < DOCUMENTS_PER_PAGE} />
+        <Pagination disabled={data?.data?.length < DOCUMENTS_PER_PAGE} />
       </div>
       <DialogBox searchParams={searchParams} />
       <Header />
       <ProductInventoryDetails productId={searchParams?.d} />
-      {data.map((product) => (
-        <ProductCard_Listing props={product} />
-      ))}
+      {data?.error ? (
+        <ComponentError errorMessage={data.error} />
+      ) : (
+        data?.data?.map((product: TypeProduct) => (
+          <ProductCard_Listing props={product} />
+        ))
+      )}
     </section>
   );
 };

@@ -6,6 +6,7 @@ import formDataForPieChart from "../_lib/utils/formDataForPieChart";
 import currentMMYY from "../_lib/utils/getCurrentMMYY";
 import LineChart from "./_charts/LineChart";
 import MultiSeriesPie from "./_charts/MultiSeriesPie";
+import ComponentError from "./ComponentError";
 import HideInventoryDetailsButton from "./HideInventoryDetailsButton";
 
 const ProductInventoryDetails = async ({
@@ -35,11 +36,16 @@ const ProductInventoryDetails = async ({
       </div>
       <div className=" my-3">
         <HeadingofInfo heading="Overall stats" />
-        <div className="flex gap-2">
-          {Object.entries(overallInventory).map(([key, value]) => (
-            <DetailsTag title={key} value={value} />
-          ))}
-        </div>
+        {overallInventory.error ? (
+          <ComponentError errorMessage={overallInventory.error} />
+        ) : (
+          <div className="flex gap-2">
+            {overallInventory?.data &&
+              Object.entries(overallInventory?.data).map(([key, value]) => (
+                <DetailsTag title={key} value={value} />
+              ))}
+          </div>
+        )}
       </div>
       {prev12monthStats && (
         <div>
@@ -51,9 +57,21 @@ const ProductInventoryDetails = async ({
         <HeadingofInfo
           heading={`makeable cross ${currentMMYY.month} inventory data`}
         />
-        <MultiSeriesPie
-          data={formDataForPieChart(totalInventory, salesofTheMonth)}
-        />
+        {totalInventory.error ? (
+          <ComponentError errorMessage={totalInventory.error} />
+        ) : salesofTheMonth.error ? (
+          <ComponentError errorMessage={salesofTheMonth.error} />
+        ) : (
+          totalInventory.data &&
+          salesofTheMonth.data && (
+            <MultiSeriesPie
+              data={formDataForPieChart(
+                totalInventory.data,
+                salesofTheMonth.data
+              )}
+            />
+          )
+        )}
       </div>
     </div>
   );

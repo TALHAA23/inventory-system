@@ -1,5 +1,5 @@
 "use server";
-import mutateProductById from "@/app/_lib/database/mutateProductById";
+import updateProductData from "@/app/_lib/database/updateProductData";
 import serverActionDefaultResponse from "@/app/_lib/utils/serverActionDefaultResponse";
 import productSchema from "@/app/_lib/utils/typeSafty/productSchema";
 import { TypeProduct } from "@/app/_types/TypeProduct";
@@ -16,7 +16,7 @@ const update = async (existingProduct: TypeProduct, formData: FormData) => {
     return serverActionDefaultResponse({ error: "Nothing to update" });
 
   try {
-    await mutateProductById(docId, modifiedFormData);
+    await updateProductData(docId, modifiedFormData);
     return serverActionDefaultResponse({
       message: `Successfully update ${numberofFieldToUpdate} properties of ${existingProduct.name.substring(
         0,
@@ -24,6 +24,7 @@ const update = async (existingProduct: TypeProduct, formData: FormData) => {
       )}`,
     });
   } catch (err) {
+    console.log(err);
     return serverActionDefaultResponse({
       error: "Couldn't update at the movement",
     });

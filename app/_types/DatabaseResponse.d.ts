@@ -1,5 +1,5 @@
-declare interface DatabaseResponse {
-  data?: any;
+declare interface DatabaseResponse<T = any> {
+  data?: T;
   error?: string;
 }
 

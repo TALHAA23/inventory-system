@@ -16,7 +16,8 @@ const connectToDB = async () => {
     console.log("connected");
     return connection;
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    throw new Error("fail to connect to database");
   }
 };
 export default connectToDB;

@@ -4,6 +4,7 @@ import updateMonthySales from "./updateMonthlySales";
 import updateOverStats from "./updateOverallStats";
 import updateProductSales from "./updateProductSales";
 import updateTodaySales from "./updateTodaySales";
+import descProductStock from "./descProductStock";
 
 const recordSale = async (
   productId: Types.ObjectId,
@@ -19,6 +20,7 @@ const recordSale = async (
       updateOverStats(numberOfOrders, income, revenue),
       updateProductSales(productId, numberOfOrders, income, revenue),
       updateTodaySales(numberOfOrders, income, revenue),
+      descProductStock(productId, numberOfOrders),
     ];
 
     const result = await Promise.all(promises);
