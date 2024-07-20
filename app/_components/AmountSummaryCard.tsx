@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import getOverallStats from "../_lib/database/getOverallstats";
 import calculateInventoryPercentagesForToday from "../_lib/utils/calculateTodaysInventory";
 import ComponentError from "./ComponentError";
@@ -10,7 +11,6 @@ const AmountSummaryCard = async ({ title }: Props) => {
     getOverallStats(),
     calculateInventoryPercentagesForToday(),
   ]);
-
   const isSalesCard = title == "Sales";
   return (
     <div className="grow flex justify-between items-center bg-color-6 p-4 rounded h-[100px] gap-4">

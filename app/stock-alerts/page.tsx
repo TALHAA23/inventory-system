@@ -6,6 +6,12 @@ import ShowRestockingFormButton from "../_components/ShowRestockingFormButton";
 import PageSearchParams from "../_types/PageSearchParams";
 import RestockingForm from "../_components/RestockingForm";
 import ComponentError from "../_components/ComponentError";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Low Stock Alerts",
+  description: "Product with low stock alert to restock them",
+};
 
 const page = async ({ searchParams }: PageSearchParams) => {
   const data = await getAllLowStockProducts();
@@ -63,8 +69,11 @@ const CreateContainers = ({ data }: { data: Partial<TypeProduct>[] }) => {
     );
   return (
     <div className="text-black grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 my-2">
-      {data.map((product: Partial<TypeProduct>) => (
-        <div className="w-full p-3 rounded bg-color-8 flex justify-between items-center text-sm">
+      {data.map((product: Partial<TypeProduct>, index) => (
+        <div
+          key={index}
+          className="w-full p-3 rounded bg-color-8 flex justify-between items-center text-sm"
+        >
           <h1 className="">
             {(product?.name || "").length > 20
               ? product?.name?.substring(0, 20) + "..."
@@ -79,31 +88,4 @@ const CreateContainers = ({ data }: { data: Partial<TypeProduct>[] }) => {
     </div>
   );
 };
-
-// const Form = ({ restockId }: { restockId: string }) => {
-//   const updateStockWithId = updateStock.bind(null, restockId);
-//   return (
-//     <div className="absolute right-2 top-2 rounded bg-slate-900 p-2">
-//       {restockId ? (
-//         <form action={updateStockWithId}>
-//           <label htmlFor="qty" className=" block text-xs text-white/75">
-//             How much you want to re-stock?
-//           </label>
-//           <p className=" text-center text-xs text-red-800">
-//             something went wrong
-//           </p>
-//           <input
-//             type="number"
-//             name="qty"
-//             id="qty"
-//             className="w-full bg-transparent focus:outline-none border-b-2 border-white focus:border-cyan-800"
-//           />
-//           <FormStatus queryKeyToDelete={["restock"]} />
-//         </form>
-//       ) : (
-//         <small>waiting for URL Search params</small>
-//       )}
-//     </div>
-//   );
-// };
 export default page;

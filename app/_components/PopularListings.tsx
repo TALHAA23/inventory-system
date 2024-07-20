@@ -35,8 +35,9 @@ const PopularListings = async ({ metadata, promise }: Props) => {
           >
             {isTopSalesListing ? "Top Sales" : "Low on Stock"}
           </h1>
-          {data?.data?.map((item: any) => (
+          {data?.data?.map((item: any, index) => (
             <TopSalesItems
+              key={index}
               metadata={metadata}
               name={item?.product?.name || item?.name}
               sales={item?.totalSales || item?.qty}

@@ -7,13 +7,15 @@ import getTopSellingProducts from "../_lib/database/getTopSales";
 import getLowStockProducts from "../_lib/database/getLowStockProducts";
 import AmountSummaryCardSkeleton from "./Skeletons/AmountSummaryCardSkeleton";
 import PopularListingsSkeleton from "./Skeletons/PopularListingsSkeleton";
-const cards = ["Income", "Revenue", "Sales"].map((card) => (
-  <Suspense fallback={<AmountSummaryCardSkeleton />}>
+import { revalidateTag } from "next/cache";
+const cards = ["Income", "Revenue", "Sales"].map((card, index) => (
+  <Suspense key={index} fallback={<AmountSummaryCardSkeleton />}>
     <AmountSummaryCard title={card} />
   </Suspense>
 ));
 
 const Dashboard = () => {
+  revalidateTag("12-month-stats");
   return (
     <div className="p-3">
       <div className="flex flex-wrap gap-2">{cards}</div>

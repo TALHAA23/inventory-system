@@ -9,6 +9,7 @@ Chart.register(...registerables);
 
 const LineChart = ({ data, error }: DatabaseResponse<LineChartData>) => {
   const chartRef = useRef<null | HTMLCanvasElement>(null);
+  console.log(data);
   useEffect(() => {
     if (!chartRef.current) return;
     const ctx = chartRef.current.getContext("2d");

@@ -1,12 +1,8 @@
 import Product from "@/app/_models/product";
 import connectToDB from "../utils/database";
-import { Types } from "mongoose";
 import { revalidateTag } from "next/cache";
 
-const descProductStock = async (
-  productId: Types.ObjectId,
-  numberToDesc: number
-) => {
+const descProductStock = async (productId: string, numberToDesc: number) => {
   await connectToDB();
   const doc = await Product.findByIdAndUpdate(
     productId,

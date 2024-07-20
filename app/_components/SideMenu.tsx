@@ -17,8 +17,11 @@ const SideMenu = () => {
       className="bg-color-2 scale-x-0 origin-left lg:scale-x-100 fixed z-50 h-full w-[300px] lg:sticky lg:max-h-screen lg:w-auto top-0 capitalize text-white gap-2 flex items-center transition-all duration-100 ease-in"
     >
       <ul className="w-full mx-2 space-y-1">
-        {NavLinks.map((item) => (
-          <li className="menu-list-item w-full px-2 rounded  onHover-bg-color-5 hover:font-bold">
+        {NavLinks.map((item, index) => (
+          <li
+            key={index}
+            className="menu-list-item w-full px-2 rounded  onHover-bg-color-5 hover:font-bold"
+          >
             <Link
               href={item.path}
               className={

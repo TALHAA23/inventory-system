@@ -50,9 +50,9 @@ const MonthlyRecordPdf = ({ data }: { data: Data[][] }) => {
           <Text style={styles.heading}>Income</Text>
           <Text style={styles.heading}>Sales</Text>
         </View>
-        {data.map((year) =>
+        {data.map((year, index) =>
           year.map((month) => (
-            <View style={styles.row}>
+            <View key={index} style={styles.row}>
               <Text style={styles.cell}>{month?.month}</Text>
               <Text style={styles.cell}>
                 {month?.data?.revenue?.toFixed(2) || "Nil"}

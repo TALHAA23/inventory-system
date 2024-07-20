@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
 const HideInventoryDetailsButton = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();

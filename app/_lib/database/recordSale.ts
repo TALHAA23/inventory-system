@@ -7,7 +7,7 @@ import updateTodaySales from "./updateTodaySales";
 import descProductStock from "./descProductStock";
 
 const recordSale = async (
-  productId: Types.ObjectId,
+  productId: string,
   numberOfOrders: number,
   income: number,
   revenue: number

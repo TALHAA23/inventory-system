@@ -5,7 +5,8 @@ import response from "../utils/response";
 const getOverallStats = unstable_cache(
   async () => {
     try {
-      const doc = await OverallStats.findOne({});
+      const doc = await OverallStats?.findOne({});
+      if (!doc) throw new Error();
       return response({ data: doc });
     } catch (err) {
       return response({ error: "Fail to fetch Stats" });

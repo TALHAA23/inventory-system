@@ -2,6 +2,7 @@ import { TypeProduct } from "../_types/TypeProduct";
 import takeDiscount from "../_lib/utils/takeDiscount";
 import ShowProductIventoryDetailsButtons from "./ShowProductIventoryDetailsButtons";
 import ShowMutationFormButton from "./ShowMutationFormButton";
+import Image from "next/image";
 interface ExtendedTypeProduct extends TypeProduct {
   income?: string;
   discountPrice?: string;
@@ -19,22 +20,18 @@ const ProductCard_Listing = ({ props }: { props: ExtendedTypeProduct }) => {
   return (
     <details className="w-full rounded  bg-color-10  content-center open:bg-cyan-600 open:border-2 p-1 open:border-cyan-950/50 ">
       <summary className=" grid grid-cols-[50%_25%_25%] md:grid-cols-[10%_40%_25%_25%]  items-center  text-sm md:py-0 cursor-pointer">
-        <img
-          src="/images/shoe.jpg"
-          alt="shoe"
-          className="hidden md:block h-[50px] aspect-square object-cover rounded border-gray-600/30"
-        />
+        <div className="relative hidden md:block h-[50px] aspect-square object-cover rounded border-gray-600/30">
+          <Image fill src="/images/shoe.jpg" alt="shoe" />
+        </div>
         <p>{props?.name}</p>
         <p>{props?.salesPrice}$</p>
         <p>{props.qty} stock</p>
       </summary>
       <div className=" border-t-2 my-2 flex flex-col md:flex-row h-auto md:h-56 py-2">
         <div className="md:h-full w-full md:w-auto aspect-square p-4">
-          <img
-            src="/images/shoe.jpg"
-            alt="shoe"
-            className="h-full aspect-square object-cover rounded-2xl border-gray-600/30"
-          />
+          <div className="relative h-full aspect-square object-cover rounded-2xl border-gray-600/30">
+            <Image fill src="/images/shoe.jpg" alt="shoe" />
+          </div>
         </div>
         <div className="grow flex flex-col justify-between">
           <div className="p-4 flex gap-5 flex-wrap">
@@ -48,8 +45,8 @@ const ProductCard_Listing = ({ props }: { props: ExtendedTypeProduct }) => {
               ["discount", props.discount],
               ["discount price", props.discountPrice],
               ["income", props.income],
-            ].map(([key, value]) => (
-              <DetailsTag title={key as string} value={value} />
+            ].map(([key, value], index) => (
+              <DetailsTag key={index} title={key as string} value={value} />
             ))}
           </div>
           <div className="flex justify-end">

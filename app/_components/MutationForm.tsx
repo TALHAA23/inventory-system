@@ -43,8 +43,8 @@ const MutationForm = ({ searchParams, data }: Props) => {
         tailwindClasses="text-center"
         queryKeyToDelete={["addnew", "update", "dummeyProduct"]}
       />
-      {formFields.map(([title, type, props]) => (
-        <div className="flex flex-col gap-1 group">
+      {formFields.map(([title, type, props], index) => (
+        <div key={index} className="flex flex-col gap-1 group">
           <label
             htmlFor={title as string}
             className=" text-sm text-white/70 group-focus-within:text-cyan-600"

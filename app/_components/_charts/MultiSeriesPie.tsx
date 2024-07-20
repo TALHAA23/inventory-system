@@ -36,7 +36,7 @@ const MultiSeriesPie = ({ data }: { data: MultiSeriesPieData }) => {
       },
     });
     return () => chart.destroy();
-  }, []);
+  }, [data.income, data.revenue, data.sales, month]);
 
   return (
     <canvas

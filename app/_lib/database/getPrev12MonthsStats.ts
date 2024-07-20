@@ -32,31 +32,29 @@ const getPrev12monthStats = (statsType?: StatsType, docId?: string) => {
         const [currentYearDoc, prevYearDoc] = productSalesDoc
           ? [
               productSalesDoc.sales[currentYear] || {},
-              productSalesDoc.sales[currentYear] || {},
+              productSalesDoc.sales[prevYear] || {},
             ]
           : await Promise.all([
               Sales.findOne({ year: currentYear }),
               Sales.findOne({ year: prevYear }),
             ]);
-
         if (statsType === "overall" && !currentYearDoc) {
           console.error("Error: Current year sales data not found.");
           return response({ error: "Current year sales data not found" });
         }
+
         const mergedData: { [key: string]: any } = {};
-        if (prevYearDoc) {
-          for (const month of getPrev12MonthNames()) {
-            if (
-              Month[month] > Month[currentMMYY.month] &&
-              Month[month] <= Month.dec
-            )
-              mergedData[month] = prevYearDoc[month];
-          }
+        for (const month of getPrev12MonthNames()) {
+          if (
+            (Month as any)[month] > (Month as any)[currentMMYY.month] &&
+            (Month as any)[month] <= Month.dec
+          )
+            mergedData[month] = prevYearDoc?.[month] || {};
         }
 
         for (const month of getPrev12MonthNames()) {
-          if (Month[month] <= Month[currentMMYY.month])
-            mergedData[month] = currentYearDoc[month];
+          if ((Month as any)[month] <= (Month as any)[currentMMYY.month])
+            mergedData[month] = currentYearDoc[month] || {};
         }
         return response({
           data: extractSalesIncomeRevenueForLineChart(mergedData),

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
 
 const FormStatus = ({
@@ -30,7 +30,14 @@ const FormStatus = ({
       queryKeyToDelete.map((key) => query.delete(key));
       replace(`${pathname}${query.size ? `?${query.toString()}` : ""}`);
     }
-  }, [formState.pending]);
+  }, [
+    formState.pending,
+    error,
+    pathname,
+    queryKeyToDelete,
+    replace,
+    searchParams,
+  ]);
   return (
     <p className={`w-full text-xs my-2 text-white ${tailwindClasses}`}>
       {formState.pending ? loadingText || "Submitting..." : onsuccessText || ""}

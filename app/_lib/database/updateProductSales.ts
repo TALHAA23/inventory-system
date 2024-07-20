@@ -1,10 +1,9 @@
 import ProductSales from "@/app/_models/productSales";
-import { Types } from "mongoose";
 import currentMMYY from "../utils/getCurrentMMYY";
 import { revalidateTag } from "next/cache";
 
 const updateProductSales = async (
-  productId: Types.ObjectId,
+  productId: string,
   numberOfOrders: number,
   income: number,
   revenue: number
@@ -26,6 +25,7 @@ const updateProductSales = async (
     `${productId}-12-month-stats`,
     "top-sales-of-month",
     `overall-inventory-${productId}`,
+    `${productId}-current-month-sales`,
   ].map((tag) => revalidateTag(tag));
   return doc;
 };

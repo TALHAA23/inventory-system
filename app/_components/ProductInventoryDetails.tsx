@@ -41,9 +41,11 @@ const ProductInventoryDetails = async ({
         ) : (
           <div className="flex gap-2">
             {overallInventory?.data &&
-              Object.entries(overallInventory?.data).map(([key, value]) => (
-                <DetailsTag title={key} value={value} />
-              ))}
+              Object.entries(overallInventory?.data).map(
+                ([key, value], index) => (
+                  <DetailsTag key={index} title={key} value={value} />
+                )
+              )}
           </div>
         )}
       </div>

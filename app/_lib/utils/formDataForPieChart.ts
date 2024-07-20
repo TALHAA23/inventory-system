@@ -1,10 +1,10 @@
 import Inventory from "@/app/_types/Inventory";
-import { MultiSeriesPie } from "@/app/_types/MultiSeriesPie";
+import { MultiSeriesPieData } from "@/app/_types/MultiSeriesPieData";
 
 export default function formDataForPieChart(
   totalInventory: Inventory,
   monthyInventory: Inventory
-): MultiSeriesPie {
+): MultiSeriesPieData {
   const combinedObject: any = {};
   const keys = ["revenue", "income", "sales"];
 
@@ -12,5 +12,5 @@ export default function formDataForPieChart(
     combinedObject[key] = [totalInventory[key], monthyInventory[key]];
   }
 
-  return combinedObject as MultiSeriesPie;
+  return combinedObject as MultiSeriesPieData;
 }

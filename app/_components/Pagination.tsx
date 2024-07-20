@@ -17,6 +17,7 @@ const Pagination = ({ disabled }: { disabled?: boolean }) => {
           const pageNumber = index + (page ? page - 1 : page + 1);
           return (
             <button
+              key={index}
               onClick={() => handleClick(pageNumber)}
               disabled={pageNumber > page && disabled}
               className={`rounded  text-black aspect-square p-2 w-9 text-center disabled:opacity-60 disabled:cursor-not-allowed ${
@@ -36,4 +37,3 @@ const Pagination = ({ disabled }: { disabled?: boolean }) => {
 };
 
 export default Pagination;
-// [&:nth-child(2)]:bg-cyan-400 [&:nth-child(2)]:font-bold

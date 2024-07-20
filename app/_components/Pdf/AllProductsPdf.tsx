@@ -69,7 +69,10 @@ const AllProductsPdf = ({ data }: { data: any }) => {
         <View style={styles.table}>
           <View style={styles.row}>
             {headers.map((head, index) => (
-              <Text style={index == 0 ? styles.numberCell : styles.heading}>
+              <Text
+                key={index}
+                style={index == 0 ? styles.numberCell : styles.heading}
+              >
                 {head}
               </Text>
             ))}
@@ -77,7 +80,7 @@ const AllProductsPdf = ({ data }: { data: any }) => {
           {Array.isArray(data) &&
             data.map((item, index) => {
               return (
-                <View style={styles.row}>
+                <View key={index} style={styles.row}>
                   <Text style={styles.numberCell}>{index + 1}</Text>
                   <Image style={styles.img} src="/images/shoe.jpg" />
                   <Text style={styles.cell}>{item?.name}</Text>

@@ -32,8 +32,8 @@ const page = async ({ searchParams }: PageSearchParams) => {
         {data?.error ? (
           <ComponentError errorMessage={data.error} />
         ) : (
-          data.data?.map((product: TypeProduct) => (
-            <ProductCard props={product} />
+          data.data?.map((product: TypeProduct, index: number) => (
+            <ProductCard key={index} props={product} />
           ))
         )}
       </div>
